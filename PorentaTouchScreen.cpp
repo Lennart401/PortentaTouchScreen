@@ -1,3 +1,6 @@
+// (c) 2021 Lennart Popkes
+// Distributed under MIT License
+
 #include <limits.h>
 #include "PortentaTouchScreen.h"
 

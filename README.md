@@ -1,4 +1,6 @@
 # Arduino Portenta H7 touchscreen library
+(c) 2021 Lennart Popkes.
+
 Distributed under the MIT License.
 
 ## Introduction

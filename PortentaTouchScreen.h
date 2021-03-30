@@ -1,3 +1,6 @@
+// (c) 2021 Lennart Popkes
+// Distributed under MIT License
+
 #ifndef _PORTENTA_TOUCH_SCREEN_H
 #define _PORTENTA_TOUCH_SCREEN_H
 
