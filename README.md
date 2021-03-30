@@ -1,4 +1,7 @@
 # Arduino Portenta H7 touchscreen library
+Distributed under the MIT License.
+
+## Introduction
 This is a very basic library for interfacing a 4-wire resistive touchscreen with the Arduino Portenta H7.
 
 Due to some pin restrictions from the STM32H7 and a few Arduino API bugs, it is currently (Mar 2021) not possible to use a standard touchscreen driver like the [Adafruit TouchScreen Library](https://github.com/adafruit/Adafruit_TouchScreen). You can read about the issue at the bottom of the document.
