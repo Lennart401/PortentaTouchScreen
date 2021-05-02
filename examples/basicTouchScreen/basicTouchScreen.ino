@@ -7,17 +7,15 @@ void setup() {
 }
 
 void loop() {
-    uint16_t touchX = ts.readTouchX();
-    uint16_t touchY = ts.readTouchY();
-    uint16_t pressure = ts.pressure();
+    Point p = ts.getPoint();
     
-    if (pressure > ts.pressureThreshold && touchX != 0 && touchY != 0) {
-        Serial.println("Raw    touch: " + String(touchX) + " | " + String(touchY) + " with pressure of " + pressure + " ");
+    if (p.z() > ts.pressureThreshold) {
+        Serial.println("Raw touch: " + String(p.x()) + " | " + String(p.y()) + " with pressure of " + p.z() + " ");
 
-        touchX = map(touchX, 1000, 64000, 0, 240);
-        touchY = map(touchY, 1000, 64000, 0, 320);
+        int touchX = map(p.x(), 100, 1950, 0, 240);
+        int touchY = map(p.y(), 100, 1950, 0, 320);
         Serial.println("mapped to: " + String(touchX) + " | " + String(touchY));
     }
 
-    delay(200);
+    delay(1);
 }
