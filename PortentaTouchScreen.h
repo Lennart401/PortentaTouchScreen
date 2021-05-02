@@ -31,15 +31,15 @@ public:
     PortentaTouchScreen(pin_size_t ym, pin_size_t xm, pin_size_t yp, pin_size_t xp);
 
     /**
-     * Read the touch event's X value.
+     * Read the touch event's X value as a 10 bit integer
      * 
-     * @return 16 bit precision integer value of the touch position on the x-plate
+     * @return the touch position on the x-plate or 0, if the touch event was invalid
      */
     uint16_t readTouchX();
     /**
-     * Read the touch event's Y value.
+     * Read the touch event's Y value as a 10 bit integer
      * 
-     * @return 16 bit precision integer value of the touch position on the y-plate
+     * @return the touch position on the y-plate or 0, if the touch event was invalid
      */
     uint16_t readTouchY();
     /**
@@ -52,7 +52,7 @@ public:
     uint16_t pressure();
 
     /// default pressure threshold. Any pressure above this value means a touch event 
-    uint16_t pressureThreshold = 1000;
+    uint16_t pressureThreshold = 10;
 
 private:
     // ym/xp only need digital (gpio) i/o ports
