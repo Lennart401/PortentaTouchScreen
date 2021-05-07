@@ -14,7 +14,6 @@
 #define NUMSAMPLES      2 // should not be changed!!!!
 #define ALLOWED_NOISE   2
 #define AVERAGE         true
-#define RXPLATE         300
 #define AVERAGE_SAMPLES 4
 
 /**
@@ -78,8 +77,9 @@ public:
      * @param xm X- pin. Must be an analog pin.
      * @param yp Y+ pin. Must be an analog pin.
      * @param xp X+ pin. Can be a digital pin.
+     * @param _xrPlate resistance over the x-plate, should usually be around 300 ohms.
      */
-    PortentaTouchScreen(pin_size_t ym, pin_size_t xm, pin_size_t yp, pin_size_t xp);
+    PortentaTouchScreen(pin_size_t ym, pin_size_t xm, pin_size_t yp, pin_size_t xp, int _rxPlate = 360);
 
     /**
      * Read the touch event's X value as a 10 bit integer
@@ -123,6 +123,9 @@ private:
     gpio_t ypOut;
     analogin_t xmIn;
     analogin_t ypIn;
+
+    // resistance over the x-plate
+    const int rxPlate;
 
     // the pinnames for the provided arduino pins
     PinName ymPin, xpPin, xmPin, ypPin;

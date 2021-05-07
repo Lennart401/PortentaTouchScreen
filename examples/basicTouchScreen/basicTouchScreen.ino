@@ -1,5 +1,6 @@
 #include <PortentaTouchScreen.h>
 
+// y- x- y+ x+ connected to YD, XL, YU, XR
 PortentaTouchScreen ts(5, A6, A4, 4);
 
 void setup() {

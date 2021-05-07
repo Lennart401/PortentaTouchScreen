@@ -7,20 +7,24 @@
 #include "hal/analogin_api.h"
 #include "hal/gpio_api.h"
 #include "PortentaTouchScreen.h"
-#include "pinDefinitions.h"
+//#include "pinDefinitions.h"
 
 // *********************************************************************************************************************
 // Point
 // *********************************************************************************************************************
-Point::Point(void) {
-    mx = my = 0;
+Point::Point(void)
+    : mx(0)
+    , my(0) {
 }
 
 // *********************************************************************************************************************
-Point::Point(int x0, int y0, int z0) {
-    mx = x0;
-    my = y0;
-    mz = z0;
+Point::Point(int x0, int y0, int z0)
+    : mx(x0)
+    , my(y0)
+    , mz(z0) {
+    //mx = x0;
+    //my = y0;
+    //mz = z0;
 }
 
 // *********************************************************************************************************************
@@ -36,11 +40,17 @@ bool Point::operator!=(Point p1) {
 // *********************************************************************************************************************
 // Portenta Touch Screen 
 // *********************************************************************************************************************
-PortentaTouchScreen::PortentaTouchScreen(pin_size_t ym, pin_size_t xm, pin_size_t yp, pin_size_t xp) {
-    ymPin = digitalPinToPinName(ym);
-    xpPin = digitalPinToPinName(xp);
-    xmPin = digitalPinToPinName(xm);
-    ypPin = digitalPinToPinName(yp);
+PortentaTouchScreen::PortentaTouchScreen(pin_size_t ym, pin_size_t xm, pin_size_t yp, pin_size_t xp, int _rxPlate) 
+    : ymPin(digitalPinToPinName(ym))
+    , xpPin(digitalPinToPinName(xp))
+    , xmPin(digitalPinToPinName(xm))
+    , ypPin(digitalPinToPinName(yp))
+    , rxPlate(_rxPlate) {
+    //ymPin = digitalPinToPinName(ym);
+    //xpPin = digitalPinToPinName(xp);
+    //xmPin = digitalPinToPinName(xm);
+    //ypPin = digitalPinToPinName(yp);
+
 }
 
 // *********************************************************************************************************************
@@ -225,12 +235,12 @@ Point PortentaTouchScreen::getPoint() {
         rtouch /= z1;
         rtouch -= 1;
         rtouch *= (2046 - x) / 2;
-        rtouch *= RXPLATE;
+        rtouch *= rxPlate;
         rtouch /= 1024;
         z = rtouch;
 
-        // something you get some issues, ignore those
-        if (z > 0xFFFF) z = 0;
+        // sometimes you get some false very high readings, ignore those
+        if (z > 2048) z = 0;
 
         // final cleanup
         analogin_free(&xmIn);
