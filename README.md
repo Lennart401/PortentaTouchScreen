@@ -16,11 +16,11 @@ This solution uses the mbed HAL layer and does not suffer from the software prob
     - The ```Y-``` and ```X+```-wires can be connected to any I/O pin
 2. Caution! Do not use any of A0-A3 pins, since these are analogue <b>input</b> only! (See [below](#the-issues-with-the-portenta-h7))
 3. In your code: include ```PortentaTouchScreen.h```
-4. Instantiate a ```PortentaTouchScreen``` passing all 4 pins to the constructor
+4. Instantiate a ```PortentaTouchScreen``` passing all 4 pins to the constructor. The library assumes a default resistance of 360 ohms across the x-Plate, which is around what most touchscreen will probably have. If needed, it can be passed as the 5th parameter.
 5. When neccessary: 
-    - read the x- and y-Positions using the corresponding methods ```readTouchX``` and ```readTouchY```. Use can use the Arduino-method ```map``` to scale the values to your screen size
-    - The touch pressure can be read using ```pressure```. A touch is sensed if the value returned is greater than ```pressureThreshold```
-    - All values are returned as a ```uint16_t``` with 16 bit accurarcy (zero to 2^16)
+    - Get the current touch point using ```getPoint```. It contains the x- and y-coordinates and the pressure z. You can use the Arduino-method ```map``` to scale the values to your screen size (like in the *basicTouchScreen* example). You might be able to use ```readTouchX```, ```readTouchY``` and ```pressure```, but they can be a little buggy and return unwanted results.
+    - A touch is sensed if the value returned is greater than ```pressureThreshold```.
+    - The values from ```getPoint``` have 11 bit accuracy (0 to 2047).
 
 ## PortentaTouchScreen and [LVGL](https://lvgl.io)
 The touchscreen can be used as an input device for Little VGL. Write your own input device callback using the input type of ```LV_INDEV_TYPE_POINTER```. 
