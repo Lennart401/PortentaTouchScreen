@@ -1,3 +1,6 @@
+| :warning: **From my testing, this code does currently not seem to work reliably for my hardware configuration (SeeedStudio TFT Touch Shield 2.0). It might work for you, but at this moment I can't provide support for this library.** |
+|---|
+
 # Arduino Portenta H7 touchscreen library
 (c) 2021 Lennart Popkes.
 
