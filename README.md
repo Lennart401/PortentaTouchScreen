@@ -1,4 +1,4 @@
-| :warning: **From my testing, this code does currently not seem to work reliably for my hardware configuration (SeeedStudio TFT Touch Shield 2.0). It might work for you, but at this moment I can't provide support for this library.** |
+| :warning: **From my testing, this code does currently not seem to work reliably for my hardware configuration (SeeedStudio TFT Touch Shield 2.0). It might work for you, but at this moment I can't provide support for this library.**<br/><br/>EDIT: I might have found the error is was having. Pins A4 and D10 (SPI1 MISO) are also connected (like A5 and D8) and therefore, as soon as I powered an SPI device, the touchscreen read would only give a garbeled mess. This also explains why the touchscreen stopped working as soon as I connected power to the touchscreen (two events that should not interfere which one another). |
 |---|
 
 # Arduino Portenta H7 touchscreen library
@@ -31,4 +31,6 @@ The touchscreen can be used as an input device for Little VGL. Write your own in
 ## The issues with the Portenta H7
 - Pins A0-A3 are analogue input only (see chapter ```Pin Descriptions``` in the [STM32H747xi datasheet](https://www.st.com/resource/en/datasheet/stm32h747xi.pdf), pins ```PA0_C```, ```PA1_C```, ```PC2_C```, ```PC3_C```)
 - Once using ```pinMode()``` on any of the other analogue pins (A4-A6), no ```analogRead()``` will be possible anymore or at least return no sensible value
-- Pin A5 (```PC3```) is connected to Pin D8, which is also the default ```SPI1 MOSI```. This is means that as long as you have any SPI devices (like an ILI9341 TFT/LCD) connected, pin A5 is basically useless
+- Pin A5 (```PC3```) is connected to Pin D8, which is also the default ```SPI1 MOSI```. This means that as long as you have any SPI devices (like an ILI9341 TFT/LCD) connected, pin A5 is basically useless
+- Pin A4 (`PC2`) is connected to Pin D10, which is also the default `SPI MISO`. This means that as long as you have any SPI devices (like an ILI9341 TFT/LCD) connected, pin A4 is basically useless.
+- With Pins A0-A5 being practically useless for this scenario, it is essentially impossible to connect a TFT/LCD with a resistive 4-wire touchscreen to the portenta without some hacking.
