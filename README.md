@@ -1,5 +1,5 @@
-| :warning: **From my testing, this code does currently not seem to work reliably for my hardware configuration (SeeedStudio TFT Touch Shield 2.0). It might work for you, but at this moment I can't provide support for this library.**<br/><br/>EDIT: I might have found the error is was having. Pins A4 and D10 (SPI1 MISO) are also connected (like A5 and D8) and therefore, as soon as I powered an SPI device, the touchscreen read would only give a garbeled mess. This also explains why the touchscreen stopped working as soon as I connected power to the touchscreen (two events that should not interfere which one another). |
-|---|
+| :warning: The portenta breakout board or any other access to the high density connectors pins is **required** to successfully connect the touchscreen when also using the SPI1 (default SPI) interface |
+| -- |
 
 # Arduino Portenta H7 touchscreen library
 (c) 2021 Lennart Popkes.
@@ -15,18 +15,18 @@ This solution uses the mbed HAL layer and does not suffer from the software prob
 
 ## How to use
 1. Connect your 4-wire touchscreen to 4 pins of the arduino. 
-    - The ```X-``` and ```Y+```-wires need to be connected to analogue I/O pins. If using the break pins on top of the board, the only two available are ```A4``` and ```A6```
-    - The ```Y-``` and ```X+```-wires can be connected to any I/O pin
-2. Caution! Do not use any of A0-A3 pins, since these are analogue <b>input</b> only! (See [below](#the-issues-with-the-portenta-h7))
-3. In your code: include ```PortentaTouchScreen.h```
-4. Instantiate a ```PortentaTouchScreen``` passing all 4 pins to the constructor. The library assumes a default resistance of 360 ohms across the x-Plate, which is around what most touchscreen will probably have. If needed, it can be passed as the 5th parameter.
+    - The `X-` and `Y+`-wires need to be connected to analog I/O pins. The breakout pin `A6` however is the only usable non-high-density analog pin on the portenta. For the second analog pin, @hpssjellis used `A7` on the high density connectors to get the example working. As I do not have the portenta breakout board as of now, I could not test this so for.
+    - The `Y-` and `X+`-wires can be connected to any I/O pin
+2. Caution! Do not use any of A0-A3 pins, since these are analog <b>input</b> only! (See [below](#the-issues-with-the-portenta-h7))
+3. In your code: include `PortentaTouchScreen.h`
+4. Instantiate a `PortentaTouchScreen` passing all 4 pins to the constructor. The library assumes a default resistance of 360 ohms across the x-Plate, which is around what most touchscreen will probably have. If needed, it can be passed as the 5th parameter.
 5. When neccessary: 
-    - Get the current touch point using ```getPoint```. It contains the x- and y-coordinates and the pressure z. You can use the Arduino-method ```map``` to scale the values to your screen size (like in the *basicTouchScreen* example). You might be able to use ```readTouchX```, ```readTouchY``` and ```pressure```, but they can be a little buggy and return unwanted results.
-    - A touch is sensed if the value returned is greater than ```pressureThreshold```.
-    - The values from ```getPoint``` have 11 bit accuracy (0 to 2047).
+    - Get the current touch point using `getPoint`. It contains the x- and y-coordinates and the pressure z. You can use the Arduino-method `map` to scale the values to your screen size (like in the *basicTouchScreen* example). You might be able to use `readTouchX`, `readTouchY` and `pressure`, but they can be a little buggy and might return unwanted results.
+    - A touch is sensed if the value returned is greater than `pressureThreshold`. This might have to be adjusted.
+    - The values from `getPoint` have 11 bit accuracy (0 to 2047).
 
 ## PortentaTouchScreen and [LVGL](https://lvgl.io)
-The touchscreen can be used as an input device for Little VGL. Write your own input device callback using the input type of ```LV_INDEV_TYPE_POINTER```. 
+The touchscreen can be used as an input device for LVGL. Write your own input device callback using the input type of ```LV_INDEV_TYPE_POINTER```. 
 
 ## The issues with the Portenta H7
 - Pins A0-A3 are analogue input only (see chapter ```Pin Descriptions``` in the [STM32H747xi datasheet](https://www.st.com/resource/en/datasheet/stm32h747xi.pdf), pins ```PA0_C```, ```PA1_C```, ```PC2_C```, ```PC3_C```)
