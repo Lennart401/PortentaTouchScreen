@@ -1,7 +1,23 @@
+// CAUTION!!
+//
+// This example is untested at the moment. I have not gotten my hands on a
+// portenta breakout board, which means I have had no chance to test it.
+
 #include <PortentaTouchScreen.h>
 
-// y- x- y+ x+ connected to YD, XL, YU, XR
-PortentaTouchScreen ts(5, A6, A4, 4);
+#define YM D5
+#define XM A6
+#define YP A7 // CAUTION!!! this is a high-density-connector pin!
+#define XP D4
+
+// How to wire up the touchscreen, using the SeeedStudio TFT v2:
+// TFT pin A0 (=YD/YM/Y-) --> portenta pin D5
+// TFT pin A1 (=XL/XM/X-) --> portenta pin A6
+// TFT pin A2 (=YU/YP/Y+) --> portenta pin A7 (high density connectors)
+// TFT pin A3 (=XR/XP/X+) --> portenta pin D4
+
+// PortentaTouchScreen(Y-, X-, Y+, X+);
+PortentaTouchScreen ts(YM, XM, YP, XP);
 
 void setup() {
     Serial.begin(115200);
@@ -18,5 +34,6 @@ void loop() {
         Serial.println("mapped to: " + String(touchX) + " | " + String(touchY));
     }
 
-    delay(1);
+    // add a delay to read the serial output
+    delay(100);
 }
