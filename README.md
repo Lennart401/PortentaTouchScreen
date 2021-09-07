@@ -15,7 +15,7 @@ This solution uses the mbed HAL layer and does not suffer from the software prob
 
 ## How to use
 1. Connect your 4-wire touchscreen to 4 pins of the arduino. 
-    - The `X-` and `Y+`-wires need to be connected to analog I/O pins. The breakout pin `A6` however is the only usable non-high-density analog pin on the portenta. For the second analog pin, @hpssjellis used `A7` on the high density connectors to get the example working. As I do not have the portenta breakout board as of now, I could not test this so for.
+    - The `X-` and `Y+`-wires need to be connected to analog I/O pins. The breakout pin `A6` however is the only usable non-high-density analog pin on the portenta. For the second analog pin, [@hpssjellis](https://github.com/hpssjellis) used `A7` on the high density connectors to get the example working. As I do not have the portenta breakout board as of now, I could not test this so for.
     - The `Y-` and `X+`-wires can be connected to any I/O pin
 2. Caution! Do not use any of A0-A3 pins, since these are analog <b>input</b> only! (See [below](#the-issues-with-the-portenta-h7))
 3. In your code: include `PortentaTouchScreen.h`
